@@ -1,0 +1,69 @@
+#######################################
+# Syntax Coloring Map For SimpleBME280
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+# editor.data_type.style
+#######################################
+
+SimpleBME280	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+# editor.function.style
+#######################################
+
+begin			KEYWORD2
+reset			KEYWORD2
+mode			KEYWORD2
+period			KEYWORD2
+filter			KEYWORD2
+oversampling	KEYWORD2
+oversamplingT	KEYWORD2
+oversamplingP	KEYWORD2
+oversamplingH	KEYWORD2
+update			KEYWORD2
+getT			KEYWORD2
+getP			KEYWORD2
+getH			KEYWORD2
+
+#######################################
+# Structures (KEYWORD3)
+# editor.function.style
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+# editor.reserved_word_2.style
+#######################################
+
+BME280_DEFAULT_HOS		LITERAL1
+BME280_DEFAULT_TOS		LITERAL1
+BME280_DEFAULT_POS		LITERAL1
+BME280_DEFAULT_MODE		LITERAL1
+BME280_DEFAULT_PERIOD	LITERAL1
+BME280_DEFAULT_FILTER	LITERAL1
+
+bmeoSkip				LITERAL1
+bmeo1					LITERAL1
+bmeo2					LITERAL1
+bmeo4					LITERAL1
+bmeo8					LITERAL1
+bmeo16					LITERAL1
+bmemSleep				LITERAL1
+bmemForced				LITERAL1
+bmemNormal				LITERAL1
+bmefOff					LITERAL1
+bmef2					LITERAL1
+bmef4					LITERAL1
+bmef8					LITERAL1
+bmef16					LITERAL1
+bmep0_5ms				LITERAL1
+bmep62_5ms				LITERAL1
+bmep125ms				LITERAL1
+bmep250ms				LITERAL1
+bmep500ms				LITERAL1
+bmep1s					LITERAL1
+bmep10ms				LITERAL1
+bmep20ms				LITERAL1
