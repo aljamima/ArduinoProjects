@@ -1,0 +1,170 @@
+SciDAVis 2.2.7 project file
+<scripting-lang>	muParser
+<windows>	2
+<table>
+3265
+<table creation_time="2024-13-06 14:39:52:000" caption_spec="%n%C{ - }%c" name="Table1" columns="2" rows="30"><comment><![CDATA[]]></comment><column creation_time="2024-13-06 14:39:52:936" caption_spec="%n%C{ - }%c" name="2" type="TypeDouble" mode="Numeric" plot_designation="X"><comment><![CDATA[]]></comment><input_filter><simple_filter creation_time="2024-13-06 14:39:52:936" caption_spec="%n%C{ - }%c" name="InputFilter" filter_name="String2DoubleFilter"><comment><![CDATA[]]></comment></simple_filter></input_filter><output_filter><simple_filter creation_time="2024-13-06 14:39:52:936" caption_spec="%n%C{ - }%c" name="OutputFilter" format="g" digits="6" filter_name="Double2StringFilter"><comment><![CDATA[]]></comment></simple_filter></output_filter><row type="TypeDouble" index="0" invalid="no">5.8240322489136143e-01</row><row type="TypeDouble" index="1" invalid="no">4.9521170631005723e-01</row><row type="TypeDouble" index="2" invalid="no">4.2107361976277391e-01</row><row type="TypeDouble" index="3" invalid="no">3.0443339885900922e-01</row><row type="TypeDouble" index="4" invalid="no">2.3549060620960324e-01</row><row type="TypeDouble" index="5" invalid="no">1.9888682561309290e-01</row><row type="TypeDouble" index="6" invalid="no">1.6239211207903373e-01</row><row type="TypeDouble" index="7" invalid="no">1.3808040800075100e-01</row><row type="TypeDouble" index="8" invalid="no">1.0973676781440070e-01</row><row type="TypeDouble" index="9" invalid="no">8.8397843993031550e-02</row><row type="TypeDouble" index="10" invalid="no">7.0252498685433748e-02</row><row type="TypeDouble" index="11" invalid="no">6.1996871210875222e-02</row></column><column creation_time="2024-13-06 14:39:52:936" caption_spec="%n%C{ - }%c" name="1" type="TypeDouble" mode="Numeric" plot_designation="Y"><comment><![CDATA[]]></comment><input_filter><simple_filter creation_time="2024-13-06 14:39:52:936" caption_spec="%n%C{ - }%c" name="InputFilter" filter_name="String2DoubleFilter"><comment><![CDATA[]]></comment></simple_filter></input_filter><output_filter><simple_filter creation_time="2024-13-06 14:39:52:936" caption_spec="%n%C{ - }%c" name="OutputFilter" format="f" digits="6" filter_name="Double2StringFilter"><comment><![CDATA[]]></comment></simple_filter></output_filter><row type="TypeDouble" index="0" invalid="no">9.9797753927753821e+00</row><row type="TypeDouble" index="1" invalid="no">1.4370054638543470e+01</row><row type="TypeDouble" index="2" invalid="no">2.0046317469750839e+01</row><row type="TypeDouble" index="3" invalid="no">4.0054827227363980e+01</row><row type="TypeDouble" index="4" invalid="no">7.0501051638671157e+01</row><row type="TypeDouble" index="5" invalid="no">9.9920794633682107e+01</row><row type="TypeDouble" index="6" invalid="no">1.4695624159945214e+02</row><row type="TypeDouble" index="7" invalid="no">2.0071965827901030e+02</row><row type="TypeDouble" index="8" invalid="no">3.1786712934333985e+02</row><row type="TypeDouble" index="9" invalid="no">4.9546600938453435e+02</row><row type="TypeDouble" index="10" invalid="no">7.8879319395526875e+02</row><row type="TypeDouble" index="11" invalid="no">9.9790600564593194e+02</row></column><column_width column="0">120</column_width><column_width column="1">120</column_width></table>
+geometry	0	0	575	383	
+
+</table>
+<multiLayer>
+Graph2	1	1	quinta-feira, 13 de junho de 2024 17:01:27 Hora oficial do Brasil
+geometry	maximized	active
+WindowLabel		2
+Margins	5	5	5	5
+Spacing	5	5
+LayerCanvasSize	1852	565
+Alignement	0	0
+<graph>
+ggeometry	5	6	873	589
+PlotTitle	Title	#ff000000	4228
+<Antialiasing>1</Antialiasing>
+Background	#ffffffff	255
+Margin	0
+Border	0	#ff000000
+grid	0	0	0	0	#ff0000ff	0	0	#ffa0a0a4	2	0	#ff0000ff	0	0	#ffa0a0a4	2	0	0	0	2	0
+EnabledAxes	1	0	1	0	
+AxesTitles	rs/r0	PPM			
+AxesTitleColors	#ff000000	#ff000000	#ff000000	#ff000000	
+AxesTitleAlignment	4	4	4	4
+TitleFont	MS Shell Dlg 2	9	75	0	0	0
+ScaleFont0	MS Shell Dlg 2	8	75	0	0	0
+ScaleFont1	MS Shell Dlg 2	8	75	0	0	0
+ScaleFont2	MS Shell Dlg 2	8	75	0	0	0
+ScaleFont3	MS Shell Dlg 2	8	75	0	0	0
+AxisFont0	MS Shell Dlg 2	8	50	0	0	0
+AxisFont1	MS Shell Dlg 2	8	50	0	0	0
+AxisFont2	MS Shell Dlg 2	8	50	0	0	0
+AxisFont3	MS Shell Dlg 2	8	50	0	0	0
+EnabledTickLabels	1	1	1	1	
+AxesColors	#ff000000	#ff000000	#ff000000	#ff000000
+AxesNumberColors	#ff000000	#ff000000	#ff000000	#ff000000
+AxesBaseline	0	0	0	0	
+CanvasBackground	#ffffffff	255
+curve	Table1_2	Table1_1	1	0	#ff000000	0	1	7	1	#ff000000	#ff000000	0	#ff000000	0	1	0	64		2	0	0	29	1
+FunctionCurve	0,NonLinearFit1,x,0.0619968712108752,0.582403224891361	100			0	1	#ffff0000	0	1	0	0	#ff000000	#ffa0a0a4	0	#ff000000	0	1	16	64		2	0	942254832	453	1
+<formula>
+a=3.90719312430419
+b=-1.99513126467406
+
+a*x^b
+</formula>
+scale	0	-200	1200	0	8	5	0	0
+scale	1	-200	1200	0	8	5	0	0
+scale	2	0	0.6	0	8	5	0	0
+scale	3	0	0.6	0	8	5	0	0
+LabelsFormat	0	4	0	4	0	4	0	4	
+AxisType	0	0	0	0	
+MajorTicks	1	1	1	1	
+MinorTicks	1	1	1	1	
+TicksLength	5	9
+DrawAxesBackbone	1
+AxesLineWidth	1
+LabelsRotation	0	0
+<legend>	0.0137931034482759	1158.33333333333	MS Shell Dlg 2	8	50	0	0	0	#ff000000	1	0	#00ffffff	0	\c{1}Table1_1	\c{2}NonLinearFit1	</legend>
+<text>	0.189938650306749	939.65844402277	MS Shell Dlg 2	8	50	0	0	0	#ff000000	1	0	#00ffffff	0	y: a*x^b		a  = 3,90719312430419 +/- 0,104988063916534	b  = -1,99513126467406 +/- 0,0101596715898575		R^2 = 0,999946154818233</text>
+</graph>
+</multiLayer>
+<log>
+[quinta-feira, 13 de junho de 2024 14:40:58 Hora oficial do Brasil	Plot: ''Graph1'']
+Exponential decay fit of dataset: Table1_1, using function: y0+A*exp(-x/t)
+Y standard errors: Unknown
+Scaled Levenberg-Marquardt algorithm with tolerance = 0,0001
+From x = 0,0619968712108752 to x = 0,582403224891361
+A (amplitude) = 4.298,07525213553 +/- 429,547554319566
+t (e-folding time) = 0,0406947994602863 +/- 1,48630532659848
+y0 (offset) = 37,4498692353844 +/- 11,1227809019366
+--------------------------------------------------------------------------------------
+Chi^2 = 5.981,38991105794
+R^2 = 0,997073238105474
+---------------------------------------------------------------------------------------
+Iterations = 7
+Status = success
+---------------------------------------------------------------------------------------
+[quinta-feira, 13 de junho de 2024 14:42:23 Hora oficial do Brasil	Plot: ''Graph1'']
+Non-linear fit of dataset: Table1_1, using function: a*x^b
+Y standard errors: Unknown
+Scaled Levenberg-Marquardt algorithm with tolerance = 0,0001
+From x = 0,0619968712108752 to x = 0,582403224891361
+a  = 3,90719312430419 +/- 0,104988063916534
+b  = -1,99513126467406 +/- 0,0101596715898575
+--------------------------------------------------------------------------------------
+Chi^2 = 110,042784001386
+R^2 = 0,999946154818233
+---------------------------------------------------------------------------------------
+Iterations = 17
+Status = success
+---------------------------------------------------------------------------------------
+[quinta-feira, 13 de junho de 2024 14:44:52 Hora oficial do Brasil	Plot: ''Graph1'']
+Exponential decay fit of dataset: Table1_2, using function: y0+A*exp(-x/t)
+Y standard errors: Unknown
+Scaled Levenberg-Marquardt algorithm with tolerance = 0,0001
+From x = 9,97977539277538 to x = 997,906005645932
+A (amplitude) = 0,533045874119243 +/- 0,0373371861695307
+t (e-folding time) = 51,0399843243955 +/- 0,00324333466725967
+y0 (offset) = 0,0978313751253067 +/- 0,0149891295013879
+--------------------------------------------------------------------------------------
+Chi^2 = 0,00985874839949914
+R^2 = 0,990367569342705
+---------------------------------------------------------------------------------------
+Iterations = 22
+Status = success
+---------------------------------------------------------------------------------------
+[quinta-feira, 13 de junho de 2024 14:44:59 Hora oficial do Brasil	Plot: ''Graph1'']
+Exponential decay fit of dataset: Table1_2, using function: y0+A*exp(-x/t)
+Y standard errors: Unknown
+Scaled Levenberg-Marquardt algorithm with tolerance = 0,0001
+From x = 9,97977539277538 to x = 997,906005645932
+A (amplitude) = 0,533011325043352 +/- 0,0373305634937311
+t (e-folding time) = 51,0538375827672 +/- 0,00324234828140803
+y0 (offset) = 0,0978179513844376 +/- 0,0149901180411764
+--------------------------------------------------------------------------------------
+Chi^2 = 0,00985874432938314
+R^2 = 0,990367573319388
+---------------------------------------------------------------------------------------
+Iterations = 0
+Status = success
+---------------------------------------------------------------------------------------
+[quinta-feira, 13 de junho de 2024 14:46:56 Hora oficial do Brasil	Plot: ''Graph1'']
+Non-linear fit of dataset: Table1_2, using function: a*b^b
+Y standard errors: Unknown
+Scaled Levenberg-Marquardt algorithm with tolerance = 0,0001
+From x = 9,97977539277538 to x = 997,906005645932
+a  = 0,101425288948228 +/- 9.432.341,30737152
+b  = 1,6705615940495 +/- 61.459.416,3287852
+--------------------------------------------------------------------------------------
+Chi^2 = 0,337873269996683
+R^2 = 0,669882959548717
+---------------------------------------------------------------------------------------
+Iterations = 12
+Status = success
+---------------------------------------------------------------------------------------
+[quinta-feira, 13 de junho de 2024 14:47:10 Hora oficial do Brasil	Plot: ''Graph1'']
+Non-linear fit of dataset: Table1_2, using function: a*x^b
+Y standard errors: Unknown
+Scaled Levenberg-Marquardt algorithm with tolerance = 0,0001
+From x = 9,97977539277538 to x = 997,906005645932
+a  = 1,75597943848423 +/- 0,0181148897154757
+b  = -0,476716991535901 +/- 0,0032129940581289
+--------------------------------------------------------------------------------------
+Chi^2 = 9,75991892765513e-05
+R^2 = 0,99990464130082
+---------------------------------------------------------------------------------------
+Iterations = 13
+Status = success
+---------------------------------------------------------------------------------------
+[quinta-feira, 13 de junho de 2024 17:02:13 Hora oficial do Brasil	Plot: ''Graph2'']
+Non-linear fit of dataset: Table1_1, using function: a*x^b
+Y standard errors: Unknown
+Scaled Levenberg-Marquardt algorithm with tolerance = 0,0001
+From x = 0,0619968712108752 to x = 0,582403224891361
+a  = 3,90719312430419 +/- 0,104988063916534
+b  = -1,99513126467406 +/- 0,0101596715898575
+--------------------------------------------------------------------------------------
+Chi^2 = 110,042784001386
+R^2 = 0,999946154818233
+---------------------------------------------------------------------------------------
+Iterations = 17
+Status = success
+---------------------------------------------------------------------------------------
+</log>
