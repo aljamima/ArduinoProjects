@@ -17,7 +17,7 @@ Encoder encoder(2, 3);  // CLK = D2, DT = D3
 #define RELAY_GREEN  7
 
 // Menu state
-const char* modeItems[] = {"AllPurpose", "Grow", "Bloom", "Test Pumps"};
+const char* modeItems[] = {"AllPurpose", "Grow", "Bloom"};
 const int modeCount = sizeof(modeItems) / sizeof(modeItems[0]);
 int modeIndex = 0;
 int gallonAmount = 1;
@@ -53,13 +53,14 @@ void setup() {
   pinMode(CONFIRM_BTN, INPUT_PULLUP);
   pinMode(BACK_BTN, INPUT_PULLUP);
 
+  // Set relay pins HIGH before setting as OUTPUT to prevent brief LOW pulse
+  digitalWrite(RELAY_PINK, HIGH);
+  digitalWrite(RELAY_PURPLE, HIGH);
+  digitalWrite(RELAY_GREEN, HIGH);
+
   pinMode(RELAY_PINK, OUTPUT);
   pinMode(RELAY_PURPLE, OUTPUT);
   pinMode(RELAY_GREEN, OUTPUT);
-
-  digitalWrite(RELAY_PINK, LOW);
-  digitalWrite(RELAY_PURPLE, LOW);
-  digitalWrite(RELAY_GREEN, LOW);
 
   encoder.write(0); // Reset position
   lastEncoderPos = 0;
@@ -101,13 +102,8 @@ void loop() {
       lastEncoderPos = 0;
     } 
     else if (screenState == CONFIRM_SCREEN) {
-      if (modeIndex == 3) {
-        Serial.println(">> TESTING PUMPS <<");
-        testPumps();
-      } else {
-        Serial.println(">> DISPENSING STARTED <<");
-        runDosing(modeIndex, gallonAmount);
-      }
+      Serial.println(">> DISPENSING STARTED <<");
+      runDosing(modeIndex, gallonAmount);
     }
     updateDisplay();
   }
@@ -136,64 +132,46 @@ void runDosing(int modeIndex, int gallons) {
 
   Serial.println("Starting dosing...");
 
-  unsigned long start = millis();
-  digitalWrite(RELAY_PINK, HIGH);
-  while (millis() - start < pinkTime) delay(1);
+  // Show pink pump status
+  display.firstPage();
+  do {
+    display.setFont(u8g2_font_6x10_tr);
+    display.drawStr(0, 12, "Dosing Pink Pump...");
+  } while (display.nextPage());
   digitalWrite(RELAY_PINK, LOW);
+  delay(pinkTime);
+  digitalWrite(RELAY_PINK, HIGH);
 
-  start = millis();
-  digitalWrite(RELAY_PURPLE, HIGH);
-  while (millis() - start < purpleTime) delay(1);
+  // Show purple pump status
+  display.firstPage();
+  do {
+    display.setFont(u8g2_font_6x10_tr);
+    display.drawStr(0, 12, "Dosing Purple Pump...");
+  } while (display.nextPage());
   digitalWrite(RELAY_PURPLE, LOW);
+  delay(purpleTime);
+  digitalWrite(RELAY_PURPLE, HIGH);
 
-  start = millis();
-  digitalWrite(RELAY_GREEN, HIGH);
-  while (millis() - start < greenTime) delay(1);
+  // Show green pump status
+  display.firstPage();
+  do {
+    display.setFont(u8g2_font_6x10_tr);
+    display.drawStr(0, 12, "Dosing Green Pump...");
+  } while (display.nextPage());
   digitalWrite(RELAY_GREEN, LOW);
+  delay(greenTime);
+  digitalWrite(RELAY_GREEN, HIGH);
 
   Serial.println("Dosing complete.");
-}
 
-void testPumps() {
-  const int delayTime = 2000;
-
-  Serial.println("Testing Pink Pump...");
+  // Display done message
   display.firstPage();
   do {
     display.setFont(u8g2_font_6x10_tr);
-    display.drawStr(0, 12, "Testing Pink Pump...");
+    display.drawStr(0, 12, "Dosing Complete.");
   } while (display.nextPage());
-  digitalWrite(RELAY_PINK, HIGH);
-  delay(delayTime);
-  digitalWrite(RELAY_PINK, LOW);
+  delay(2000);
 
-  Serial.println("Testing Purple Pump...");
-  display.firstPage();
-  do {
-    display.setFont(u8g2_font_6x10_tr);
-    display.drawStr(0, 12, "Testing Purple Pump...");
-  } while (display.nextPage());
-  digitalWrite(RELAY_PURPLE, HIGH);
-  delay(delayTime);
-  digitalWrite(RELAY_PURPLE, LOW);
-
-  Serial.println("Testing Green Pump...");
-  display.firstPage();
-  do {
-    display.setFont(u8g2_font_6x10_tr);
-    display.drawStr(0, 12, "Testing Green Pump...");
-  } while (display.nextPage());
-  digitalWrite(RELAY_GREEN, HIGH);
-  delay(delayTime);
-  digitalWrite(RELAY_GREEN, LOW);
-
-  Serial.println("Test complete.");
-  display.firstPage();
-  do {
-    display.setFont(u8g2_font_6x10_tr);
-    display.drawStr(0, 12, "Test Complete.");
-  } while (display.nextPage());
-  delay(1500);
   screenState = MODE_SELECT;
   encoder.write(0);
   lastEncoderPos = 0;
