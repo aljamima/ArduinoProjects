@@ -1,24 +1,24 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH110X.h>
+#include <Encoder.h>
 
 // OLED I2C
 Adafruit_SH1106G display(128, 64, &Wire, -1);
 
-// Encoder & Buttons
-#define ENCODER_CLK 2
-#define ENCODER_DT 3
+// Rotary encoder pins
+Encoder encoder(2, 3);  // CLK = D2, DT = D3
+
 #define ENCODER_BTN 4
 #define CONFIRM_BTN 5
 #define BACK_BTN 6
 
-// Encoder handling
-volatile int encoderDelta = 0;
-int lastClkState = HIGH;
-unsigned long lastEncoderTime = 0;
+#define RELAY_PINK   9
+#define RELAY_PURPLE 8
+#define RELAY_GREEN  7
 
 // Menu state
-const char* modeItems[] = {"AllPurpose", "Grow", "Bloom"};
+const char* modeItems[] = {"AllPurpose", "Grow", "Bloom", "Test Pumps"};
 const int modeCount = sizeof(modeItems) / sizeof(modeItems[0]);
 int modeIndex = 0;
 int gallonAmount = 1;
@@ -29,6 +29,20 @@ enum ScreenState {
   CONFIRM_SCREEN
 };
 ScreenState screenState = MODE_SELECT;
+
+long lastEncoderPos = 0;
+
+struct Dosing {
+  int pink;
+  int purple;
+  int green;
+};
+
+Dosing dosingProfiles[] = {
+  {5, 5, 5},    // AllPurpose
+  {5, 10, 15},  // Grow
+  {15, 10, 5}   // Bloom
+};
 
 void setup() {
   Serial.begin(115200);
@@ -43,81 +57,105 @@ void setup() {
   display.clearDisplay();
   updateDisplay();
 
-  pinMode(ENCODER_CLK, INPUT_PULLUP);
-  pinMode(ENCODER_DT, INPUT_PULLUP);
   pinMode(ENCODER_BTN, INPUT_PULLUP);
   pinMode(CONFIRM_BTN, INPUT_PULLUP);
   pinMode(BACK_BTN, INPUT_PULLUP);
 
-  attachInterrupt(digitalPinToInterrupt(ENCODER_CLK), readEncoder, CHANGE);
+  pinMode(RELAY_PINK, OUTPUT);
+  pinMode(RELAY_PURPLE, OUTPUT);
+  pinMode(RELAY_GREEN, OUTPUT);
+
+  digitalWrite(RELAY_PINK, LOW);
+  digitalWrite(RELAY_PURPLE, LOW);
+  digitalWrite(RELAY_GREEN, LOW);
+
+  encoder.write(0); // Reset position
+  lastEncoderPos = 0;
 }
 
 void loop() {
-  static int lastModeIndex = -1;
-  static int lastGallon = -1;
-  bool screenChanged = false;
+  long newPos = encoder.read() / 4;  // Most EC11s give 4 counts per detent
+  int delta = newPos - lastEncoderPos;
 
-  // Handle encoder movement
-  if (encoderDelta != 0) {
+  if (delta != 0) {
+    lastEncoderPos = newPos;
+
     if (screenState == MODE_SELECT) {
-      modeIndex += encoderDelta;
-      if (modeIndex >= modeCount) modeIndex = 0;
+      modeIndex -= delta; // Reversed increment direction
       if (modeIndex < 0) modeIndex = modeCount - 1;
-      screenChanged = true;
+      if (modeIndex >= modeCount) modeIndex = 0;
+
     } else if (screenState == GALLON_SELECT) {
-      gallonAmount += encoderDelta;
-      if (gallonAmount > 10) gallonAmount = 1;
-      if (gallonAmount < 1) gallonAmount = 50;
-      screenChanged = true;
+      gallonAmount -= delta; // Reversed increment direction
+      if (gallonAmount < 1) gallonAmount = 100;
+      if (gallonAmount > 100) gallonAmount = 1;
     }
-    encoderDelta = 0;
+
+    updateDisplay();
   }
 
-  // Confirm (rotary button or confirm button)
+  // Confirm buttons
   if (digitalRead(ENCODER_BTN) == LOW || digitalRead(CONFIRM_BTN) == LOW) {
-    delay(150);  // debounce
+    delay(150); // Debounce
     if (screenState == MODE_SELECT) {
-      screenState = GALLON_SELECT;
-    } else if (screenState == GALLON_SELECT) {
+      if (modeIndex == 3) {  // Test Pumps selected
+        testPumps();
+      } else {
+        screenState = GALLON_SELECT;
+        encoder.write(0);
+        lastEncoderPos = 0;
+      }    } else if (screenState == GALLON_SELECT) {
       screenState = CONFIRM_SCREEN;
+      encoder.write(0);
+      lastEncoderPos = 0;
     } else if (screenState == CONFIRM_SCREEN) {
       Serial.println(">> DISPENSING STARTED <<");
-      // Call your dispensing logic here
+      runDosing(modeIndex, gallonAmount);
     }
-    screenChanged = true;
+    updateDisplay();
   }
 
   // Back button
   if (digitalRead(BACK_BTN) == LOW) {
-    delay(150);  // debounce
+    delay(150); // Debounce
     if (screenState == GALLON_SELECT) {
       screenState = MODE_SELECT;
     } else if (screenState == CONFIRM_SCREEN) {
       screenState = GALLON_SELECT;
     }
-    screenChanged = true;
-  }
-
-  if (screenChanged || lastModeIndex != modeIndex || lastGallon != gallonAmount) {
+    encoder.write(0);
+    lastEncoderPos = 0;
     updateDisplay();
-    lastModeIndex = modeIndex;
-    lastGallon = gallonAmount;
   }
 
   delay(10);
 }
 
-void readEncoder() {
-  if (millis() - lastEncoderTime < 100) return; // debounce
-  lastEncoderTime = millis();
+void runDosing(int modeIndex, int gallons) {
+  Dosing d = dosingProfiles[modeIndex];
 
-  int clk = digitalRead(ENCODER_CLK);
-  int dt = digitalRead(ENCODER_DT);
+  unsigned long pinkTime = d.pink * gallons * 1000UL;
+  unsigned long purpleTime = d.purple * gallons * 1000UL;
+  unsigned long greenTime = d.green * gallons * 1000UL;
 
-  if (clk != lastClkState) {
-    encoderDelta = (dt != clk) ? 1 : -1;
-  }
-  lastClkState = clk;
+  Serial.println("Starting dosing...");
+
+  unsigned long start = millis();
+  digitalWrite(RELAY_PINK, HIGH);
+  while (millis() - start < pinkTime) delay(1);
+  digitalWrite(RELAY_PINK, LOW);
+
+  start = millis();
+  digitalWrite(RELAY_PURPLE, HIGH);
+  while (millis() - start < purpleTime) delay(1);
+  digitalWrite(RELAY_PURPLE, LOW);
+
+  start = millis();
+  digitalWrite(RELAY_GREEN, HIGH);
+  while (millis() - start < greenTime) delay(1);
+  digitalWrite(RELAY_GREEN, LOW);
+
+  Serial.println("Dosing complete.");
 }
 
 void updateDisplay() {
@@ -131,12 +169,14 @@ void updateDisplay() {
       display.print((i == modeIndex) ? "> " : "  ");
       display.println(modeItems[i]);
     }
+
   } else if (screenState == GALLON_SELECT) {
     display.println("How many gallons?");
     display.setTextSize(2);
-    display.setCursor(40, 30);
+    display.setCursor(20, 30);
     display.println(String(gallonAmount));
     display.setTextSize(1);
+
   } else if (screenState == CONFIRM_SCREEN) {
     display.println("Confirm:");
     display.setCursor(0, 15);
